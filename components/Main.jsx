@@ -9,12 +9,13 @@ const Main = () => {
 
   const [search, setSearch] = useState("");
   const [searchFilm, setSearchFilm] = useState(films)
+  const [genre, setGenre] = useState("");
 
   useEffect(() => {
 
     const filteredFilms = films.filter((film) =>
-      film.genre.toLowerCase().includes(search.toLowerCase())
-
+      film.genre.toLowerCase().includes(search.toLowerCase()) ||
+      film.title.toLowerCase().includes(search.toLowerCase())
     );
 
     setSearchFilm(filteredFilms);
