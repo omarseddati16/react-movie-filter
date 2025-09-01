@@ -13,7 +13,8 @@ const Main = () => {
   useEffect(() => {
 
     const filteredFilms = films.filter((film) =>
-      film.title.toLowerCase().includes(search.toLowerCase())
+      film.genre.toLowerCase().includes(search.toLowerCase())
+
     );
 
     setSearchFilm(filteredFilms);
