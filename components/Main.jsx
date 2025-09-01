@@ -1,48 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import films from "../data/films";
-import { useState } from "react";
-
-
-
 
 const Main = () => {
-
   const [search, setSearch] = useState("");
-  const [searchFilm, setSearchFilm] = useState(films)
-  const [genre, setGenre] = useState("");
+  const [searchFilm, setSearchFilm] = useState(films);
 
   useEffect(() => {
+    let filteredFilms
 
-    const filteredFilms = films.filter((film) =>
-      film.genre.toLowerCase().includes(search.toLowerCase()) ||
-      film.title.toLowerCase().includes(search.toLowerCase())
-    );
+    if (search === "") {
+      filteredFilms = films;
+    } else {
+      filteredFilms = films.filter((film) =>
+        film.genre.toLowerCase().includes(search.toLowerCase()) ||
+        film.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
 
     setSearchFilm(filteredFilms);
   }, [search]);
 
-
   const handleForm = (event) => {
     event.preventDefault();
-
-  }
+  };
 
   return (
     <>
       <form onSubmit={handleForm}>
-        <input
-          type="text"
-          value={search}
+        <select
           onChange={(event) => setSearch(event.target.value)}
-        />
-        <button className='btn  btn-primary'>Cerca</button>
+          value={search}
+        >
+          <option value="">-- Tutti i generi --</option>
+          <option value="Fantascienza">Fantascienza</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Romantico">Romantico</option>
+          <option value="Azione">Azione</option>
+        </select>
       </form>
 
       <ul className="list-unstyled">
-        {searchFilm.map((filmsMapped, index) => (
+        {searchFilm.map((film, index) => (
           <li className="m-5" key={index}>
-            <h5>{filmsMapped.title}</h5>
-            <p>{filmsMapped.genre}</p>
+            <h5>{film.title}</h5>
+            <p>{film.genre}</p>
           </li>
         ))}
       </ul>
